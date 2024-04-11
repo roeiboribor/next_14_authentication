@@ -3,6 +3,9 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { poster } from '@/helpers/putter';
 
 export const authOptions: AuthOptions = {
+	pages: {
+		signIn: '/login',
+	},
 	providers: [
 		CredentialsProvider({
 			name: 'credentials',
@@ -13,7 +16,7 @@ export const authOptions: AuthOptions = {
 			async authorize(credentials) {
 				try {
 					// Make a POST request to your Laravel API's login endpoint using Axios
-					const response = await poster('api/login', {
+					const response = await poster('/api/login', {
 						email: credentials?.email,
 						password: credentials?.password,
 					});
@@ -23,7 +26,7 @@ export const authOptions: AuthOptions = {
 
 					// If token and user data exist, return the user object
 					if (token && user) {
-						console.log({ ...user, accessToken: token });
+						// console.log({ ...user, accessToken: token });
 						return { ...user, accessToken: token };
 					} else {
 						return null;
