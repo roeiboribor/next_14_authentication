@@ -26,13 +26,12 @@ export const authOptions: AuthOptions = {
 
 					// If token and user data exist, return the user object
 					if (token && user) {
-						// console.log({ ...user, accessToken: token });
 						return { ...user, accessToken: token };
 					} else {
 						return null;
 					}
 				} catch (error) {
-					console.error('Authentication error:', error.response.data);
+					console.error('Authentication error:', error.response.data.error);
 					return null;
 				}
 			},

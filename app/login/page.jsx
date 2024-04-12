@@ -4,7 +4,8 @@ import { useState } from 'react';
 
 const Login = () => {
 	const [email, setEmail] = useState('roeiboribor@gmail.com');
-	const [password, setPassword] = useState('passwordss');
+	const [password, setPassword] = useState('passwords');
+	const [errors, setErrors] = useState([]);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -17,8 +18,8 @@ const Login = () => {
 			});
 
 			// Check if response contains an error message
-			if (response.error) {
-				console.log(response.error);
+			if (response.error && response.error === 'CredentialsSignin') {
+				setErrors(['Invalid Credentials']);
 			} else {
 				// Authentication succeeded, redirect or handle accordingly
 				console.log('Boom Pasok!');
@@ -31,6 +32,18 @@ const Login = () => {
 	return (
 		<main className="max-w-3xl mx-auto">
 			<form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
+				<div>
+					{errors.length > 0 && (
+						<div>
+							<h2>Error Messages:</h2>
+							<ul>
+								{errors.map((error, index) => (
+									<li key={index}>{error}</li>
+								))}
+							</ul>
+						</div>
+					)}
+				</div>
 				<div className="flex flex-col">
 					<label htmlFor="email">Email</label>
 					<input
