@@ -1,12 +1,18 @@
+import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-export const metadata = {
+interface Metadata {
+	title: string;
+	description: string;
+}
+
+export const metadata: Metadata = {
 	title: 'Dashboard | Webdevbro',
 	description: 'Dashboard',
 };
 
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
 	return (
 		<div>
 			<h1>Dashboard</h1>
