@@ -1,5 +1,10 @@
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+
+export const metadata = {
+	title: 'Dashboard | Webdevbro',
+	description: 'Dashboard',
+};
 
 const Dashboard = () => {
 	return (
@@ -7,14 +12,14 @@ const Dashboard = () => {
 			<h1>Dashboard</h1>
 			<ul className="flex space-x-6 px-4 mt-8">
 				<li>
-					<Button>
-						<Link href="/tickets">Tickets</Link>
-					</Button>
+					<Link href="/tickets">
+						<Button>Tickets</Button>
+					</Link>
 				</li>
 				<li>
-					<Button>
-						<Link href="/users">Users</Link>
-					</Button>
+					<Link href="/users">
+						<Button>Users</Button>
+					</Link>
 				</li>
 			</ul>
 		</div>
