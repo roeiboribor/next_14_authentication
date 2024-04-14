@@ -2,10 +2,13 @@ import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { poster } from '@/helpers/putter';
 
+if (!process.env.NEXTAUTH_SECRET) {
+	throw new Error(
+		'please provide process.env.NEXTAUTH_SECRET environment variable'
+	);
+}
+
 export const authOptions: AuthOptions = {
-	pages: {
-		signIn: '/login',
-	},
 	providers: [
 		CredentialsProvider({
 			name: 'credentials',
@@ -41,7 +44,7 @@ export const authOptions: AuthOptions = {
 		async jwt({ token, user }) {
 			if (user) {
 				//@ts-ignore
-				token.accessToken = user.access_token;
+				token.accessToken = user?.accessToken;
 			}
 			return token;
 		},
@@ -50,5 +53,8 @@ export const authOptions: AuthOptions = {
 			session.accessToken = token.accessToken;
 			return session;
 		},
+	},
+	pages: {
+		signIn: '/login',
 	},
 };

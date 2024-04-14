@@ -12,14 +12,16 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 import { signIn } from 'next-auth/react';
-import { useState } from 'react';
 
 // FORM FIELD RELATED
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useRouter } from 'next/navigation';
 
 const LoginForm = () => {
+	const router = useRouter();
+
 	const formSchema = z.object({
 		email: z
 			.string({ required_error: 'The email field is required.' })
@@ -27,14 +29,17 @@ const LoginForm = () => {
 			.max(255, { message: 'The email field is too long' }),
 		password: z
 			.string({ required_error: 'The email field is required.' })
+			.min(8, {
+				message: 'Password must be at least 8 characters.',
+			})
 			.max(255),
 	});
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			email: '',
-			password: '',
+			email: 'roeiboribor@gmail.com',
+			password: 'passwords',
 		},
 	});
 
@@ -53,10 +58,9 @@ const LoginForm = () => {
 					message: 'Invalid Credentials',
 				});
 			} else {
-				form.reset();
 				// REDIRECT IF AUTHENTICATED
-				// CODE HERE...
-				console.log('Boom Pasok!');
+				router.push('/dashboard');
+				form.reset();
 			}
 		} catch (error) {
 			console.error('Authentication failed', error);
