@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import {
 	Card,
 	CardContent,
@@ -5,7 +6,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
-import React from 'react';
+
+export const metadata: Metadata = {
+	title: 'Register | Webdevbro',
+	description: 'Register your Webdevbro account',
+};
 
 const Register = () => {
 	return (
