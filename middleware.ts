@@ -1,20 +1,13 @@
-// middleware.ts
-import { getToken } from 'next-auth/jwt';
-import { NextRequest, NextResponse } from 'next/server';
+import withAuthorization from './middlewares/withAuthorization';
 
-export async function middleware(req: NextRequest) {
-	const pathname = req.nextUrl.pathname;
-	const protectedPaths = ['/', '/dashboard', '/test'];
-	const isPathProtected = protectedPaths?.some((path) => pathname == path);
+import { NextMiddleware, NextResponse } from 'next/server';
+const mainMiddleware: NextMiddleware = (request) => {
 	const res = NextResponse.next();
+	return res;
+};
 
-	if (isPathProtected) {
-		const token = await getToken({ req });
-
-		if (!token) {
-			const url = new URL(`/login`, req.url);
-			url.searchParams.set('callbackUrl', pathname);
-			return NextResponse.redirect(url);
-		}
-	}
-}
+export default withAuthorization(mainMiddleware, [
+	'/dashboard',
+	'/tickets',
+	'/users',
+]);
